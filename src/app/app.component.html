@@ -4,28 +4,35 @@
   <div class="form-card">
       <h1 class="title">Reactive Forms</h1>
 
-      <form class="form">
+      <form class="form" [formGroup]="form">
         <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Nombre" />
+          <input type="input" class="form__field" placeholder="Nombre" formControlName='name' />
           <label for="Nombre" class="form__label">Nombre</label>
+          <small *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched" style="color: red;">Debes ingresar una nombre!</small>
         </div>
   
         <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Edad" />
+          <input type="input" class="form__field" placeholder="Edad" formControlName='age' />
           <label for="Edad" class="form__label">Edad</label>
-        </div>
-  
-        <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Empresa" />
-          <label for="Empresa" class="form__label">Empresa</label>
-        </div>
-  
-        <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Email" />
-          <label for="Email" class="form__label">Email</label>
+          <small *ngIf="form.get('age')?.errors?.['required'] && form.get('age')?.touched" style="color: red;">Debes ingresar una edad!</small>
+          <small *ngIf="form.get('age')?.errors?.['notANumber'] && form.get('age')?.touched" style="color: red;">Debes ingresar un numero!</small>
+          <small *ngIf="form.get('age')?.errors?.['max'] && form.get('age')?.touched" style="color: red;">La edad no puede superar los 180 años!</small>
+         </div>
+         
+         <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Empresa" formControlName='company' />
+            <label for="Empresa" class="form__label">Empresa</label>
+            <small *ngIf="form.get('company')?.errors?.['required'] && form.get('company')?.touched" style="color: red;">Debes ingresar una compañia!</small>
+         </div>
+         
+         <div class="form__group field">
+            <input type="input" class="form__field" placeholder="Email" formControlName='mail' />
+            <label for="Email" class="form__label">Email</label>
+            <small *ngIf="form.get('mail')?.errors?.['required'] && form.get('mail')?.touched" style="color: red;">Debes ingresar una email!</small>
+            <small *ngIf="form.get('mail')?.errors?.['email'] && form.get('mail')?.touched" style="color: red;">Debes ingresar un email valido!</small>
         </div>
      
-        <button class="btn" [disabled]="false"> Enviar </button>
+        <button class="btn" [disabled]="!form.valid" (click)="sendForm()"> Enviar </button>
       </form>
      
   </div>
