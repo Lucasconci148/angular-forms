@@ -4,28 +4,55 @@
   <div class="form-card">
       <h1 class="title">Reactive Forms</h1>
 
-      <form class="form">
+      <form class="form" [formGroup]="userForm">
         <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Nombre" />
-          <label for="Nombre" class="form__label">Nombre</label>
+          <input type="text" formControlName="name" class="form__field" placeholder="Nombre" />
+          <label for="name" class="form__label">Nombre*
+          </label>
+          <div class="alert" *ngIf="userForm.controls['name'].invalid && (userForm.controls['name'].dirty || userForm.controls['name'].touched)" class="alert">
+            <div *ngIf="userForm.controls['name'].value === ''">
+              Campo obligatorio
+            </div>
+          </div>
+        </div>
+        
+        <div class="form__group field">
+          <input type="number" formControlName="age" class="form__field" placeholder="Edad" />
+          <label for="age" class="form__label">Edad*</label>
+          <div class="alert" *ngIf="userForm.controls['age'].invalid && (userForm.controls['age'].dirty || userForm.controls['age'].touched)" class="alert">
+            <div *ngIf="userForm.controls['age'].value === '' || userForm.controls['age'].value === null">
+              Campo obligatorio
+            </div>
+            <div *ngIf="userForm.controls['age'].errors && userForm.controls['age'].value">
+              Edad máxima permitida: 180
+            </div>
+          </div>
+        </div>
+        
+        <div class="form__group field">
+          <input type="input" formControlName="company" class="form__field" placeholder="Empresa" />
+          <label for="company" class="form__label">Empresa*</label>
+          <div class="alert" *ngIf="userForm.controls['company'].invalid && (userForm.controls['company'].dirty || userForm.controls['company'].touched)" class="alert">
+            <div *ngIf="userForm.controls['company'].value === ''">
+              Campo obligatorio
+            </div>
+          </div>
         </div>
   
         <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Edad" />
-          <label for="Edad" class="form__label">Edad</label>
-        </div>
-  
-        <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Empresa" />
-          <label for="Empresa" class="form__label">Empresa</label>
-        </div>
-  
-        <div class="form__group field">
-          <input type="input" class="form__field" placeholder="Email" />
-          <label for="Email" class="form__label">Email</label>
+          <input type="input" formControlName="email" class="form__field" placeholder="Email" />
+          <label for="email" class="form__label">Email*</label>
+          <div class="alert" *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].dirty || userForm.controls['email'].touched)" class="alert">
+            <div *ngIf="userForm.controls['email'].value === ''">
+              Campo obligatorio
+            </div>
+            <div *ngIf="userForm.controls['email'].errors && userForm.controls['email'].value != ''">
+              Formato de email incorrecto
+            </div>
+          </div>
         </div>
      
-        <button class="btn" [disabled]="false"> Enviar </button>
+        <button class="btn" [disabled]="userForm.invalid" (click)="sendForm()"> Enviar </button>
       </form>
      
   </div>
